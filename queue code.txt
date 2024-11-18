@@ -1,0 +1,65 @@
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        queue q = new queue(6);
+        q.enqueue(4);
+        q.enqueue(5);
+        q.display();
+    }
+}
+
+class queue{
+    int[] myQueue;
+    int n;
+    int r;
+    int f;
+    
+    public queue(int size){
+        n = size;
+        myQueue = new int[n];
+        r = -1;
+        f = -1;
+    }
+    
+    public boolean isFull(){
+        if (f==0 && r==n-1){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean isEmpty(){
+        if (f<0 || f>r){
+            return true;
+        }
+        return false;
+    }
+    
+    public void enqueue(int el){
+        if (!isFull()){
+            r++;
+            myQueue[r] = el;
+            f++;
+            System.out.println("Insertion successful!");
+        }
+        else{
+            System.out.println("Insertion not possible!");
+        }
+    }
+    
+    public int dequeue(){
+        if(!isEmpty()){
+            int stored = myQueue[f];
+            f++;
+            return stored;
+        }
+        return -1;
+    }
+    
+    public void display(){
+        for(int i=0; i < n; i++){
+            System.out.print(+myQueue[i] +" ");
+        }
+    }
+}
