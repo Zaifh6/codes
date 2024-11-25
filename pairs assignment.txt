@@ -1,0 +1,70 @@
+package pairsassignment;
+
+public class PairsAssignment {
+
+    public static void main(String[] args) {
+        stack obj = new stack();
+        obj.fill();
+        obj.check();
+        obj.refill();
+        obj.display();
+    }
+    
+}
+
+package pairsassignment;
+import java.util.*;
+
+public class stack {
+    Stack<Integer> stack1 = new Stack<>();
+    Stack<Integer> stack2 = new Stack<>();
+    int a;
+    int b;
+
+    Scanner input = new Scanner(System.in);
+    
+    public void fill(){
+        for(int i = 0; i < 8; i++){
+            System.out.println("Enter " + (i+1) + " value to push: ");
+            int val = input.nextInt();
+            stack1.push(val);
+        }
+    } 
+    
+    public void check(){
+        System.out.println("----------------------------------------------------");
+        for (int i=0; i<4; i++){
+            a= stack1.pop();
+            b= stack1.pop();
+            if(a+1 == b || a-1 == b){
+                System.out.println((i+1) + "th check: The 2 values are consecutive");
+                if(a<b){
+                    System.out.println(a + " is less than " +b);
+                }
+                else{
+                    System.out.println(a + " is greater than " +b);
+                }
+                
+            }
+            else{
+                System.out.println((i+1) + "th check: The 2 values are not consecutive");
+            }
+            stack2.push(a);
+            stack2.push(b);
+            
+        }
+    }
+    
+    public void refill(){
+        for(int i=0; i<8; i++){
+            int el = stack2.pop();
+            stack1.push(el);
+        }
+    }
+    
+    public void display(){
+        System.out.println("---------------------------------");
+        System.out.println(stack1);
+    }
+    
+}
