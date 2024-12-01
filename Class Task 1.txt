@@ -1,0 +1,42 @@
+// Main class containing the main method
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Stack<Integer> s = new Stack<>();
+        Stack<Integer> IntermediateStack = new Stack<>();
+        Stack<Integer> FinalStack = new Stack<>();
+        s.push(6);
+        s.push(2);
+        s.push(5);
+        s.push(7);
+        s.push(3);
+        s.push(2);
+        
+        System.out.println(s);
+        for(int i = 0; i < 3; i++){
+          System.out.println("Pair Number: " + (i+1));
+          int a = s.pop();
+          int b = s.pop();
+          IntermediateStack.push(a);
+          IntermediateStack.push(b);
+          if(Math.abs(a - b) == 1){
+            System.out.println(a + " And " + b + " Are" + " Consecutive");
+            if (a > b){
+              System.out.println(">--- " + a + " Is Greater Than " + b);
+              System.out.println("-------------------------");
+            }else{
+              System.out.println(">--- " + a + " Is Less Than " + b);
+              System.out.println("-------------------------");
+            }
+          }else{
+            System.out.println(a + " And " + b + " Are" + " Not Consecutive");
+            System.out.println("-------------------------");
+          }
+        }
+        while(!IntermediateStack.isEmpty()) {
+            FinalStack.push(IntermediateStack.pop());
+        }
+        System.out.println(FinalStack);
+  }
+}
