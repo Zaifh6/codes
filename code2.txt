@@ -1,0 +1,42 @@
+# Clear the environment
+rm(list = ls())
+
+# Load necessary library
+library(readxl)
+
+# Read the data
+Population <- read_excel("C:/Users/student/Desktop/Population.xlsx")
+
+# View the data and summarize it
+View(Population)
+summary(Population)
+
+# Extract the variables
+population <- Population$Population
+sample <- Population$Samples
+Population$Samples <- factor(Population$Samples)
+
+# Boxplot to visualize the data distribution across groups
+boxplot(population ~ sample, main = "Population by Sample", xlab = "Sample", ylab = "Population")
+
+# Perform Shapiro-Wilk test for normality
+shapiro_test_result <- shapiro.test(population)
+print(shapiro_test_result)
+
+# Perform Bartlett's test for homogeneity of variances
+bartlett_test_result <- bartlett.test(population ~ sample)
+print(bartlett_test_result)
+
+# Fit the ANOVA model
+a <- aov(population ~ Samples, data = Population)
+
+# Display the summary of the ANOVA model
+summary(a)
+
+# Calculate the mean population for each sample group
+means_by_group <- tapply(population, sample, mean)
+print(means_by_group)
+
+# Perform Tukey's HSD test
+tukey_result <- TukeyHSD(a)
+print(tukey_result)
