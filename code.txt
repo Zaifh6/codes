@@ -1,0 +1,45 @@
+rm(list = ls())
+scores_8 <- c(121, 117, 145, 108, 142, 154, 115, 81, 122, 127, 122)
+scores_10 <- c(97, 145, 119, 139, 143, 133, 149, 107, 154)
+scores_2 <- c(134, 89, 108, 88, 146, 153, 130, 144, 125, 111, 87, 162)
+
+# Combine data into a data frame
+scores <- c(scores_8, scores_10, scores_2)
+group <- c(rep("8-o'clock", length(scores_8)),
+           rep("10-o'clock", length(scores_10)),
+           rep("2-o'clock", length(scores_2)))
+
+data <- data.frame(scores, group)
+
+# Step 2: Check assumptions
+# (1) Check normality with Shapiro-Wilk test
+shapiro_8 <- shapiro.test(scores_8)
+shapiro_10 <- shapiro.test(scores_10)
+shapiro_2 <- shapiro.test(scores_2)
+
+# (2) Check homogeneity of variances with Levene's Test
+library(car) # Load car package for Levene's test
+levene_test <- leveneTest(scores ~ group, data = data)
+
+# Step 3: Perform ANOVA
+anova_result <- aov(scores ~ group, data = data)
+anova_summary <- summary(anova_result)
+
+# Step 4: Post-hoc test (if ANOVA is significant)
+posthoc <- TukeyHSD(anova_result)
+
+# Step 5: Print results
+cat("Shapiro-Wilk Test for Normality:\n")
+print(shapiro_8)
+print(shapiro_10)
+print(shapiro_2)
+
+cat("\nLevene's Test for Homogeneity of Variances:\n")
+print(levene_test)
+
+cat("\nANOVA Summary:\n")
+print(anova_summary)
+
+cat("\nPost-hoc Test (Tukey's HSD):\n")
+print(posthoc)
+
